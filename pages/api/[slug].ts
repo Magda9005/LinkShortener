@@ -7,16 +7,20 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const short: string = req.query.short;
+  const slug: string = req.query.slug;
 
   const links: Links | null = await prisma.links.findFirst({
     where: {
-      shortLink: short,
+      shortLink: slug,
     },
   });
 
   if (links !== null) {
     const fullLink: string = links.fullLink;
     res.redirect(fullLink);
+  }else {
+    return {
+      notFound:true
+    }
   }
 }

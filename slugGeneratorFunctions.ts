@@ -1,31 +1,4 @@
-const alphabet = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-];
+import { alphabet } from "./constants";
 
 const getRandomNumberFromTheRange = (min: number, max: number): number => {
   return Math.floor(Math.random() * max + min);
@@ -49,15 +22,17 @@ const getRandom4DigitsNumber = (): string => {
 
   return number;
 };
-export const getShort = (): string => {
-  let short: string =
+
+
+export const getSlug = (): string => {
+  let slug: string =
     getRandomLetter(alphabet) +
     getRandom4DigitsNumber() +
     getRandomLetter(alphabet);
-  return short;
+  return slug;
 };
 
-export const getLinkWithProtocole = (link: string): string => {
+export const protocole = (link: string): string => {
   const first4letters: string = link.slice(0, 4);
   const protocole: string = "http://";
   if (first4letters == "http") {
