@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  background-color: rgba(6, 6, 73, 0.883);
+}
+
+.whiteTitleElement {
+  font-size: 20px;
+  color: white;
+}
+
+.orangeTitleElement {
+  color: #ffa500;
+}
+
+.logoContainer {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
