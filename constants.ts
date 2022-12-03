@@ -1,6 +1,3 @@
-import { PrismaClient } from "@prisma/client";
-export const prisma = new PrismaClient();
-
 export const alphabet = [
   "a",
   "b",
@@ -30,5 +27,5 @@ export const alphabet = [
   "z",
 ];
 
-export const recordsNumber = 5;
+export const limitOfRecordsPerPage = 5;
 export const firstPage = 1;

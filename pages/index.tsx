@@ -1,103 +1,133 @@
+import styles from "../components/index.module.scss";
 import { useState } from "react";
+import { addLinkToDb } from "../database/addLinkToDb";
 import Link from "next/link";
 import Head from "next/head";
-import Header from "./Header";
+import Header from "../components/Header";
+import Image from "next/image";
+import FeatureItem from "../components/FeatureItem";
 
 const Shortener: React.FC = () => {
   const [link, setLink] = useState("");
   const [shortenedLink, setShortenedLink] = useState("");
-  const [slugGenerated, setSlugGenerated] = useState(false);
-  const [showError,setShowError]=useState(false)
-
-  const addLinkToDb = async ()=> {
-    const response = await fetch("/api/links", {
-      method: "POST",
-      body: JSON.stringify({ link }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(res=>res.json()).then(shortcut=>setShortenedLink(shortcut));
-
-    return response;
-  };
-
-
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
 
-    if(link===""){
-      setShowError(true)
-    }else {
-      setShowError(false)
-      addLinkToDb();
-      setSlugGenerated(true);
+    if (link === "") {
+      setShowError(true);
+    } else {
+      setShowError(false);
+      setErrorMessage("");
+      addLinkToDb(link)
+        .then((shortcut) => setShortenedLink(shortcut.shortLink))
+        .catch(() =>
+          setErrorMessage("Sorry, something went wrong. Please try again ")
+        );
     }
-    
   };
 
   return (
     <>
-    <Head>
-      <title>Link Shortener</title>
-    </Head>
-    <Header/>
-    <div className="container">
-      <div className="main-section-container">
-      <p className="instruction">Paste the URL you want to be shortened:</p>
-      <form onSubmit={(e) => handleSubmit(e)}>
-      <div className='input-container'>
-        <input 
-          className='link-input'
-          type="text"
-          value={link}
-          placeholder="Enter the link here"
-          onChange={(e) => {
-            if(e.target.value!==""){
-              setShowError(false);
-            }
-            if(e.target.value==""){
-              setSlugGenerated(false);
-            }
-            setLink(e.target.value)}
+      <Head>
+        <title>Link Shortener</title>
+      </Head>
+      <Header />
+      <div className={styles.mainSectionContainer}>
+        <p className={styles.instruction}>
+          Paste the URL you want to get shortened and once it's done click the
+          new link to visit the website or copy it to share with others.
+        </p>
+        <form onSubmit={handleSubmit}>
+          <div className={styles.inputContainer}>
+            <input
+              className={styles.linkInput}
+              type="text"
+              value={link}
+              placeholder="Enter the link here"
+              onChange={(e) => {
+                if (e.target.value !== "") {
+                  setShowError(false);
+                }
+                setLink(e.target.value);
+              }}
+            />
+            <div className={styles.inputIconContainer}>
+              <Image
+                priority={false}
+                src={"/inputIcon.svg"}
+                alt="logo"
+                width={30}
+                height={30}
+              />
+            </div>
+            <button type="submit" className={styles.submitBtn}>
+              Shorten URL
+            </button>
+          </div>
+        </form>
+
+        {showError && (
+          <p className={styles.errorMessage}> Please enter the link!</p>
+        )}
+        {errorMessage ? (
+          <p className={styles.errorMessage}> {errorMessage} </p>
+        ) : null}
+        {shortenedLink && (
+          <>
+            <span className={styles.newLinkTitle}>Your new link is:</span>
+            <div className={styles.newLinkContainer}>
+              <Link href={`/${shortenedLink}`}>
+                <span className={styles.newLink}>
+                  {" "}
+                  {appUrl}/api/{shortenedLink}{" "}
+                </span>
+              </Link>
+
+              <div className={styles.inputIconContainer}>
+                <Image
+                  priority={false}
+                  src={"/inputIcon.svg"}
+                  alt="logo"
+                  width={30}
+                  height={30}
+                />
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+      <div className={styles.featuresContainer}>
+        <FeatureItem
+          alt={"thumb up icon"}
+          url={"/thumbup.svg"}
+          name={"Easy"}
+          description={
+            "Link Shortener is user friendly,easy and fast. Enter the link to get your shortened url"
           }
         />
-        <button type="submit" className="submit-btn">
-          Shorten URL
-        </button>
-
+        <FeatureItem
+          alt={"hyperlink icon "}
+          url={"/urlIcon.svg"}
+          name={"Shortened"}
+          description={
+            "No matter what size, Link Shortener always shortens. Just check try it out"
+          }
+        />
+        <FeatureItem
+          alt={"devices icon"}
+          url={"/devicesIcon.svg"}
+          name={"Devices"}
+          description={
+            "Compatible with devies such as smartphones, tablets and desktop"
+          }
+        />
       </div>
-      </form>
-
-      {showError ?  <p className="error-message"> Please enter the link!</p>:
-
-      <span className="new-link-title">Your new link is:</span>}      
-
-      <div className="new-link-container">
-
-      {slugGenerated && (
-        <Link href={`/api/${shortenedLink}`}>
-          <a>
-            <span className="new-link">
-              {" "}
-              http://localhost:3000/api/{shortenedLink}{" "}
-            </span>
-          </a>
-        </Link>
-      )}
-              </div>
-
-      <p className="info">
-        {" "}
-        Click the link to go directly to the website or copy it and share with
-        other people.
-      </p>
-      </div>
-    </div>
     </>
   );
 };
 
 export default Shortener;
-
-

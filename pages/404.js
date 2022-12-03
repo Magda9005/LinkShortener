@@ -1,19 +1,15 @@
+import styles from "../components/ErrorPage.module.scss";
 import Link from "next/link";
-import styles from "../styles/modules/errorPage.module.scss";
 
-const NotFound = () => (
-  <div className={styles["error-page"]}>
-    <h1 className={styles["error-page-main-title"]}> 404 </h1>
-    <h2 className={styles["error-page-subtitle"]}>Not found!</h2>
-    <p>Sorry,we can't find what you're looking for.</p>
-    <Link href={'/'} role="link">
-      <button className={styles["go-back-home-btn"]} role="button">
-        Go back home
-      </button>
+const ErrorPage = () => (
+  <div className={styles.errorPage}>
+    <h1 className={styles.title}> 404 </h1>
+    <h2 className={styles.subtitle}>Not found!</h2>
+    <p>Sorry, we can't find what you're looking for.</p>
+    <Link href={"/"} role="link">
+      <span className={styles.goBackHomeLink}>Go back home</span>
     </Link>
   </div>
 );
 
-export default NotFound;
-
-
+export default ErrorPage;

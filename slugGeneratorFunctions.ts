@@ -5,24 +5,22 @@ const getRandomNumberFromTheRange = (min: number, max: number): number => {
 };
 
 const getRandomLetter = (listOfLetters: string[]): string => {
-  let firstIndex: number = 0;
-  let lastIndex: number = listOfLetters.length - 1;
+  const firstIndex: number = 0;
+  const lastIndex: number = listOfLetters.length - 1;
   const index: number = getRandomNumberFromTheRange(firstIndex, lastIndex);
-  const randomLetter: string = listOfLetters[index];
-  return randomLetter;
+  return listOfLetters[index];
 };
 
 const getRandom4DigitsNumber = (): string => {
-  let number: string = "";
-  let minNumber: number = 0;
-  let maxNumber: number = 9;
+  const number: number[] = [];
+  const minNumber: number = 0;
+  const maxNumber: number = 9;
   for (let i = 0; i < 4; i++) {
-    number = number + getRandomNumberFromTheRange(minNumber, maxNumber);
+    number.push(getRandomNumberFromTheRange(minNumber, maxNumber));
   }
 
-  return number;
+  return number.join("");
 };
-
 
 export const getSlug = (): string => {
   let slug: string =
@@ -33,11 +31,14 @@ export const getSlug = (): string => {
 };
 
 export const protocole = (link: string): string => {
-  const first4letters: string = link.slice(0, 4);
-  const protocole: string = "http://";
-  if (first4letters == "http") {
+  const first4letters: string = link.slice(0, 4).toLowerCase();
+  const first5letters: string = link.slice(0, 5).toLowerCase();
+  const securedProtocole: string = "https://";
+  if (first5letters === "https") {
     return link;
+  } else if (first4letters === "http") {
+    return link.replace("http", "https");
   } else {
-    return protocole + link;
+    return securedProtocole + link;
   }
 };

@@ -1,0 +1,46 @@
+@import "../styles/breakpoints";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&display=swap");
+
+.container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 25%;
+  margin-top: 3%;
+  padding: 2%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 6px 6px 20px 0px rgb(163, 166, 199);
+  transition: transform 0.3s;
+
+  @include md {
+    width: 20%;
+  }
+}
+
+.container:hover {
+  transform: scale(1.1);
+}
+.featureName {
+  display: block;
+  margin: 15px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  color: #556070;
+
+  @include md {
+    font-size: 20px;
+  }
+}
+
+.description {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  color: #556070;
+
+  @include md {
+    font-size: 20px;
+  }
+}

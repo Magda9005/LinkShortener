@@ -1,8 +1,8 @@
-import { prisma } from "../constants";
+import { prisma } from "../database/prisma";
 import { Link, IParams } from "../interfaces";
 import { GetServerSideProps } from "next";
 
-export const Component = () => <></>;
+export const Component = () => null;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params as IParams;
