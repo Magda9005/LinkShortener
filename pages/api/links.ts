@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { protocole } from "../../slugGeneratorFunctions";
-import { getSlug } from "../../slugGeneratorFunctions";
-import { limitOfRecordsPerPage } from "../../constants";
+import { getLinkWithSecuredProtocole } from "../../utils/getLinkWithSecuredProtocole";
+import { getSlug } from "../../utils/slugGeneratorFunctions";
+import { limitOfRecordsPerPage } from "../../utils/constants";
 import { prisma } from "../../database/prisma";
 
 export default async function handler(
@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     if (req.body) {
-      const link: string = protocole(req.body.link);
+      const link: string = getLinkWithSecuredProtocole(req.body.link);
       const slug = getSlug();
 
       const newRecord = await prisma.links.create({

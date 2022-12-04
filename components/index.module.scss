@@ -145,10 +145,38 @@
   font-weight: 600;
   font-size: 1.5em;
   color: #a53dff;
+  margin-bottom: 10%;
 }
 
 .featuresContainer {
   display: flex;
   margin: 2%;
   justify-content: space-between;
+}
+
+.loader {
+  margin: auto;
+  border: 5px solid #eaf0f6;
+  border-radius: 50%;
+  border-top: 5px solid #a53dff;
+  width: 50px;
+  height: 50px;
+  animation: spinner 4s linear infinite;
+
+  @include md {
+    border: 10px solid #eaf0f6;
+    width: 100px;
+    height: 100px;
+    border-top: 10px solid #a53dff;
+  }
+}
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

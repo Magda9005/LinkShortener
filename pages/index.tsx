@@ -10,23 +10,25 @@ import FeatureItem from "../components/FeatureItem";
 const Shortener: React.FC = () => {
   const [link, setLink] = useState("");
   const [shortenedLink, setShortenedLink] = useState("");
-  const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
 
     if (link === "") {
-      setShowError(true);
+      setErrorMessage("Please enter the link");
     } else {
-      setShowError(false);
       setErrorMessage("");
+      setIsLoading(true);
       addLinkToDb(link)
         .then((shortcut) => setShortenedLink(shortcut.shortLink))
         .catch(() =>
           setErrorMessage("Sorry, something went wrong. Please try again ")
-        );
+        )
+        .finally(() => setIsLoading(false));
     }
   };
 
@@ -50,7 +52,7 @@ const Shortener: React.FC = () => {
               placeholder="Enter the link here"
               onChange={(e) => {
                 if (e.target.value !== "") {
-                  setShowError(false);
+                  setErrorMessage("");
                 }
                 setLink(e.target.value);
               }}
@@ -64,18 +66,21 @@ const Shortener: React.FC = () => {
                 height={30}
               />
             </div>
-            <button type="submit" className={styles.submitBtn}>
+            <button
+              type="submit"
+              className={styles.submitBtn}
+              disabled={isLoading}
+            >
               Shorten URL
             </button>
           </div>
         </form>
+        {isLoading && <div className={styles.loader}></div>}
 
-        {showError && (
-          <p className={styles.errorMessage}> Please enter the link!</p>
-        )}
-        {errorMessage ? (
+        {errorMessage && (
           <p className={styles.errorMessage}> {errorMessage} </p>
-        ) : null}
+        )}
+
         {shortenedLink && (
           <>
             <span className={styles.newLinkTitle}>Your new link is:</span>

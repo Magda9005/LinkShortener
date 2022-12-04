@@ -1,5 +1,5 @@
 import { prisma } from "../database/prisma";
-import { Link, IParams } from "../interfaces";
+import { Link, IParams } from "../utils/interfaces";
 import { GetServerSideProps } from "next";
 
 export const Component = () => null;
