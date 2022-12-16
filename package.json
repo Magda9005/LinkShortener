@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@next/font": "^13.0.6",
@@ -28,6 +29,7 @@
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
+    "prisma": "^4.7.1",
     "ts-jest": "^29.0.3",
     "typescript": "4.7.3"
   }
