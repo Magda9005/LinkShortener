@@ -22,7 +22,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/404.js",
-    "tests/getLinkWithSecuredProtocole.test.js",
+    "tests/getLinkWithSecuredProtocol.test.js",
     "tests/protocole.js"
   ],
   "exclude": ["node_modules"]

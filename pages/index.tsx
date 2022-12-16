@@ -1,6 +1,6 @@
 import styles from "../components/index.module.scss";
 import { useState } from "react";
-import { addLinkToDb } from "../database/addLinkToDb";
+import { addLinkToDb } from "../utils/addLinkToDb";
 import Link from "next/link";
 import Head from "next/head";
 import Header from "../components/Header";

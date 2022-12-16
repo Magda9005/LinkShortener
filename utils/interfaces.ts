@@ -1,5 +1,3 @@
-import { ParsedUrlQuery } from "querystring";
-
 export interface Results {
   next?: {
     page: number;
@@ -18,6 +16,4 @@ export interface Link {
   fullLink: string;
 }
 
-export interface IParams extends ParsedUrlQuery {
-  slug: string;
-}
+

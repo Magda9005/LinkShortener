@@ -13,8 +13,8 @@ const Header: React.FC = () => (
       />
     </div>
     <h1 className={styles.title}>
-      <span className={styles.whiteTitleElement}> link </span>{" "}
-      <span className={styles.orangeTitleElement}>shortener</span>{" "}
+      <span className={styles.whiteTitleElement}> link </span>
+      <span className={styles.orangeTitleElement}>shortener</span>
     </h1>
   </div>
 );

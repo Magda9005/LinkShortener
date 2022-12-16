@@ -1,11 +1,16 @@
 import { prisma } from "../database/prisma";
-import { Link, IParams } from "../utils/interfaces";
+import { Link} from "../utils/interfaces";
 import { GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
+
+interface ShortenedPageQuery extends ParsedUrlQuery{
+  slug:string
+}
 
 export const Component = () => null;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { slug } = context.params as IParams;
+  const { slug } = context.params as ShortenedPageQuery;
   const link: Link | null = await prisma.links.findFirst({
     where: {
       shortLink: slug,

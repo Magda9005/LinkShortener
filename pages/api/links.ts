@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getLinkWithSecuredProtocole } from "../../utils/getLinkWithSecuredProtocole";
+import { getLinkWithSecuredProtocol } from "../../utils/getLinkWithSecuredProtocol";
 import { getSlug } from "../../utils/slugGeneratorFunctions";
 import { limitOfRecordsPerPage } from "../../utils/constants";
 import { prisma } from "../../database/prisma";
@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     if (req.body) {
-      const link: string = getLinkWithSecuredProtocole(req.body.link);
+      const link: string = getLinkWithSecuredProtocol(req.body.link);
       const slug = getSlug();
 
       const newRecord = await prisma.links.create({
