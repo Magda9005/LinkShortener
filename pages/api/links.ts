@@ -1,8 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getLinkWithSecuredProtocol } from "../../utils/getLinkWithSecuredProtocol";
 import { getSlug } from "../../utils/slugGeneratorFunctions";
-import { limitOfRecordsPerPage } from "../../utils/constants";
 import { prisma } from "../../database/prisma";
+
+const addDbEntry = async (link: string, slug: string) => {
+  const newEntry = await prisma.links.create({
+    data: {
+      shortLink: slug,
+      fullLink: link,
+    },
+  });
+  return newEntry;
+};
+
+const getRecordsFromDb = async (page: number, limit: number) => {
+  const recordsPerPage = await prisma.links.findMany({
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  return recordsPerPage;
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,34 +28,24 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     if (req.body) {
-      const link: string = getLinkWithSecuredProtocol(req.body.link);
+      const link = getLinkWithSecuredProtocol(req.body.link);
       const slug = getSlug();
-
-      const newRecord = await prisma.links.create({
-        data: {
-          shortLink: slug,
-          fullLink: link,
-        },
-      });
-      return res.json(newRecord);
+      const newRecordInDb = await addDbEntry(link, slug);
+      return res.json(newRecordInDb);
     } else {
       return res.status(400).json({ message: "Bad request" });
     }
   }
 
   if (req.method === "GET") {
-    const page: number = Number(req.query.page);
-    const limit: number = Number(req.query.limit);
+    const page = Number(req.query.page);
+    const limit = Number(req.query.limit);
 
-    if (Number.isNaN(page) || Number.isNaN(limit)) {
+    if (Number.isNaN(page) || Number.isNaN(limit) || limit <= 0 || page <= 0) {
       return res.status(400).json({ message: "Bad request" });
     }
+    const links = await getRecordsFromDb(page, limit);
 
-    const recordsPerPage = await prisma.links.findMany({
-      skip: page >= 1 && limit > 0 ? (page - 1) * limit : 0,
-      take: limit > 0 ? limit : limitOfRecordsPerPage,
-    });
-
-    return res.json(recordsPerPage);
+    return res.json(links);
   }
 }

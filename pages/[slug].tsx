@@ -1,10 +1,10 @@
 import { prisma } from "../database/prisma";
-import { Link} from "../utils/interfaces";
+import { Link } from "../utils/interfaces";
 import { GetServerSideProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 
-interface ShortenedPageQuery extends ParsedUrlQuery{
-  slug:string
+interface ShortenedPageQuery extends ParsedUrlQuery {
+  slug: string;
 }
 
 export const Component = () => null;

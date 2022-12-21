@@ -26,6 +26,3 @@ export const alphabet = [
   "y",
   "z",
 ];
-
-export const limitOfRecordsPerPage = 5;
-export const firstPage = 1;

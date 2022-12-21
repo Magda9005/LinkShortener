@@ -15,5 +15,3 @@ export interface Link {
   shortLink: string;
   fullLink: string;
 }
-
-
