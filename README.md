@@ -7,13 +7,13 @@ This small app will help you to shorten the links.
 
 - generating shortened URLs
 - paginated API
-- loader included
+- unit tests included
 
 ## How to setup the project:
 
-1. Install all dependencies: **yarn install**
-2. Generate Prisma Client: **yarn run postinstall**
-3. Start the development server: **yarn run**
+1. Install all dependencies: `**yarn install**`
+2. Generate Prisma Client: `**yarn run postinstall**`
+3. Start the development server: `**yarn run**`
 
 <img width="600" alt="image" src="https://user-images.githubusercontent.com/92581964/208067756-241a35ef-0c69-4277-bab4-8983ba268fda.png">
 

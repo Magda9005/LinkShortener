@@ -4,22 +4,19 @@ import { getSlug } from "../../utils/slugGeneratorFunctions";
 import { prisma } from "../../database/prisma";
 
 const addDbEntry = async (link: string, slug: string) => {
-  const newEntry = await prisma.links.create({
+  return await prisma.links.create({
     data: {
       shortLink: slug,
       fullLink: link,
     },
   });
-  return newEntry;
 };
 
-const getRecordsFromDb = async (page: number, limit: number) => {
-  const recordsPerPage = await prisma.links.findMany({
+const getEntriesFromDb = async (page: number, limit: number) => {
+  return await prisma.links.findMany({
     skip: (page - 1) * limit,
     take: limit,
   });
-
-  return recordsPerPage;
 };
 
 export default async function handler(
@@ -27,14 +24,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    if (req.body) {
-      const link = getLinkWithSecuredProtocol(req.body.link);
-      const slug = getSlug();
-      const newRecordInDb = await addDbEntry(link, slug);
-      return res.json(newRecordInDb);
-    } else {
+    if (typeof req.body.link !== "string") {
       return res.status(400).json({ message: "Bad request" });
     }
+    const link = getLinkWithSecuredProtocol(req.body.link);
+    const slug = getSlug();
+    const newRecord = await addDbEntry(link, slug);
+    return res.json(newRecord);
   }
 
   if (req.method === "GET") {
@@ -44,7 +40,7 @@ export default async function handler(
     if (Number.isNaN(page) || Number.isNaN(limit) || limit <= 0 || page <= 0) {
       return res.status(400).json({ message: "Bad request" });
     }
-    const links = await getRecordsFromDb(page, limit);
+    const links = await getEntriesFromDb(page, limit);
 
     return res.json(links);
   }

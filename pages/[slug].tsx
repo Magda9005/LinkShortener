@@ -17,16 +17,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   });
 
-  if (link !== null) {
+  if (link == null) {
+    return {
+      notFound: true,
+    };
+  } else {
     return {
       redirect: {
         destination: `${link.fullLink}`,
         permanent: false,
       },
-    };
-  } else {
-    return {
-      notFound: true,
     };
   }
 };
