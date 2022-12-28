@@ -40,7 +40,7 @@ const Shortener: React.FC = () => {
       <Header />
       <div className={styles.mainSectionContainer}>
         <p className={styles.instruction}>
-          Paste the URL you want to get shortened and once it's done click the
+          Paste the URL you want to get shortened and once it is done click the
           new link to visit the website or copy it to share with others.
         </p>
         <form onSubmit={handleSubmit}>
